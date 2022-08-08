@@ -10,8 +10,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ICategoryDal, CategoryDal>();
 builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+
 builder.Services.AddScoped<IProductDal, ProductDal>();
 builder.Services.AddScoped<IProductManager , ProductManager>();
+
+builder.Services.AddScoped<IProductCategoryManager, ProductCategoryManager>();
+builder.Services.AddScoped<IProductCategoryDal , ProductCategoryDal>();
 
 var app = builder.Build();
 

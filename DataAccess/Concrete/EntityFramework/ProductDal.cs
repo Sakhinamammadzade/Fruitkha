@@ -11,6 +11,16 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class ProductDal : EfEntityRepositoryBase<Product, ShopDbContext>, IProductDal
     {
+       
+
+        public Product AddProduct(Product product)
+        {
+            using ShopDbContext _context = new();
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return product;
+        }
+
         public List<Product> GetByCategory(int categoryId)
         {
             using ShopDbContext context = new();

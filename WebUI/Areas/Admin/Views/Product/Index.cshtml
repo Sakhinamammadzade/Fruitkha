@@ -15,7 +15,7 @@
 
     <div class="card-body">
         <div class="table-responsive ">
-            <table class="table table-bordered border table-dark border-danger" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered border" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -77,7 +77,11 @@
                                     }
                                 }
                             </td>
-
+                            <td>
+                                <a class="btn btn-outline-danger  btn-sm" href="/admin/product/delete/@product.Id">Delete</a>
+                                <a class="btn btn-outline-warning btn-sm" href="/admin/product/update/@product.Id">Update</a>
+                                
+                            </td>
 
                         </tr>
                     }

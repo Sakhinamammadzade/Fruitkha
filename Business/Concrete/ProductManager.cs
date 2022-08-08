@@ -18,14 +18,16 @@ namespace Business.Concrete
            _productDal = productDal;
         }
 
-        public void Add(Product product)
+        public Product Add(Product product)
         {
-         _productDal.Add(product);
+          return _productDal.AddProduct(product);
         }
 
-        public void Delete(Product product)
+        public void Delete(int productId)
         {
-           _productDal.Delete(product);
+            var product = _productDal.Get(x => x.Id == productId);
+                product.IsDelete = true;
+            _productDal.Update(product);
         }
 
         public List<Product> GetAll()
@@ -52,5 +54,7 @@ namespace Business.Concrete
         {
             _productDal.Update(product);
         }
+
+       
     }
 }

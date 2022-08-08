@@ -1,24 +1,27 @@
-﻿<div class="card shadow my-5">
+﻿ @model ProductVm
+    
+
+<div class="card shadow my-5">
     <div class="card-body">
         <form class="form-group" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-12">
-                      <input class="form-control" placeholder="Product Name" type="text" name="Name"/>
+                      <input class="form-control" value=" @Model.product.Name" placeholder="Name" type="text" name="Name"/>
                     </div>
                  <div class="col-lg-4">
-                      <input class="form-control" placeholder="Price" type="text" name="Price"/>
+                      <input class="form-control" value=" @Model.product.Price"  placeholder="Price" type="text" name="Price"/>
                   
                  </div>
                   <div class="col-lg-4">
-                      <input class="form-control" placeholder="Quantity" type="text" name="Quantity"/>
+                      <input class="form-control" value=" @Model.product.Quantity"  placeholder="Quantity" type="text" name="Quantity"/>
                   
                  </div>
                    <div class="col-lg-4">
-                      <input class="form-control" placeholder="Discount" type="text" name="Discount"/>
+                      <input class="form-control" value=" @Model.product.DisCount"  placeholder="Discount" type="text" name="Discount"/>
                   
                  </div>
                     <div class="col-lg-12">
-                      <textarea id="editor" class="form-control" placeholder="Description" type="text" name="Description"></textarea>
+                      <textarea id="editor" value=" @Model.product.Description"  class="form-control" placeholder="Description" type="text" name="Description"></textarea>
                   
                  </div>
                    <div class="col-lg-4 my-2">
@@ -35,11 +38,24 @@
                 </div>
                     <div class="col-lg-4 my-2">
                         <select multiple class="form-control" name="Categories" >
-                           
-                          @foreach (var category in ViewData["Categories"] as List<Category>)
-                          {
-                              <option value="@category.Id">@category.Name</option>
-                          }
+                        @{
+                            var productCategory = Model.productCategories;
+                            var categories = Model.categories;
+
+                            @foreach (var item in categories)
+                            {
+                                if (productCategory.Contains(item.Id))
+                                {
+                                    <option selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                     <option >@item.Name</option>
+                                }
+                            }
+                        }           
+
+
 
                         </select>
 

@@ -9,9 +9,10 @@ namespace Business.Abstract
 {
     public interface IProductManager
     { 
-        void Add(Product product);
+        Product Add(Product product);
         void Update(Product product);
-        void Delete(Product product);   
+        void Delete(int productId);   
+      
         List<Product> GetAll(); 
         List<Product> GetProductsByCategory(int categoryId);
         Product GetById(int id);
