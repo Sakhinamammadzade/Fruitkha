@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace Business.Abstract
         List<Product> GetAll(); 
         List<Product> GetProductsByCategory(int categoryId);
         Product GetById(int id);
+        ProductDetailDto GetProductById(int id);
+        List<Product> GetSliderProducts();
 
 
     }

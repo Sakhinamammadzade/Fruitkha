@@ -24,10 +24,20 @@ namespace Business.Concrete
 
         }
 
+
         public List<ProductCategory> GetProductCategoryById(int productId)
         {
             return _productCategoryDal.GetAll(x=>x.ProductId==productId);
 
+        }
+
+        public void RemoveProductCategories(int productId)
+        {
+            var deleteProductCategory=_productCategoryDal.GetAll(x=>x.ProductId==productId);
+            for (int i = 0; i < deleteProductCategory.Count; i++)
+            {
+                _productCategoryDal.Delete(deleteProductCategory[i]);
+            }
         }
     }
 }

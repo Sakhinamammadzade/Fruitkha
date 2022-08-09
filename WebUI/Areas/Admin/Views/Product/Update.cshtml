@@ -21,23 +21,25 @@
                   
                  </div>
                     <div class="col-lg-12">
-                      <textarea id="editor" value=" @Model.product.Description"  class="form-control" placeholder="Description" type="text" name="Description"></textarea>
+                      <textarea id="editor" value=" @Model.product.Description"  class="form-control" placeholder="Description" name="Description"></textarea>
                   
                  </div>
                    <div class="col-lg-4 my-2">
                     <span>PhotoUrl</span>
                     <input class="form-control" type="file" name="NewPhotoUrl" />
+                    <input type="hidden" value="@Model.product.CoverPhoto" name="PhotoUrl"/>
                 </div>
                 <div class="col-lg-4 my-2">
                     <span>PhotoUrl</span>
                     <input class="form-control" type="file" name="NewCoverPhoto" />
+                    <input type="hidden" value="@Model.product.CoverPhoto" name="CoverPhoto"/>
                 </div>
                 <div class="col-lg-4 my-2">
                     <span>IsSlider</span>
                     <input type="checkbox" name="IsSlider" />
                 </div>
                     <div class="col-lg-4 my-2">
-                        <select multiple class="form-control" name="Categories" >
+                        <select multiple class="form-control" name="CategoriesId" >
                         @{
                             var productCategory = Model.productCategories;
                             var categories = Model.categories;
@@ -46,11 +48,11 @@
                             {
                                 if (productCategory.Contains(item.Id))
                                 {
-                                    <option selected>@item.Name</option>
+                                    <option value="@item.Id" selected>@item.Name</option>
                                 }
                                 else
                                 {
-                                     <option >@item.Name</option>
+                                     <option value="@item.Id" >@item.Name</option>
                                 }
                             }
                         }           
@@ -62,7 +64,7 @@
                     </div>              
                </div>
 
-               <input type="submit" class="btn-primary btn-outline-success" value="Create"/>
+               <input type="submit" class="btn-primary btn-outline-warning" value="Update"/>
         </form>
     </div>
 </div>

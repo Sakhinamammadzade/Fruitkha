@@ -132,8 +132,58 @@ namespace WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Product product,List<int>Categories)
+        public IActionResult Update(Product product,List<int>CategoriesId,IFormFile NewPhotoUrl,IFormFile NewCoverFile)
         {
+            try
+            {
+                if (NewPhotoUrl != null)
+                {
+                    string myPhoto = Guid.NewGuid().ToString() + Path.GetExtension(NewPhotoUrl.FileName);
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/image", myPhoto);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        NewPhotoUrl.CopyTo(stream);
+                    }
+                    product.PhotoUrl = "/image/" + myPhoto;
+                }
+                if(NewCoverFile != null)
+                {
+                    string myCoverPhoto = Guid.NewGuid().ToString() + Path.GetExtension(NewCoverFile.FileName);
+                    string pathCover = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/image", myCoverPhoto);
+
+                    using (var stream = new FileStream(pathCover, FileMode.Create))
+                    {
+                        NewCoverFile.CopyTo(stream);
+                    }
+
+                    product.CoverPhoto = "/image/" + myCoverPhoto;
+
+                }
+                _productCategoryManager.RemoveProductCategories(product.Id);
+
+                for (int i = 0; i < CategoriesId.Count; i++)
+                {
+                    ProductCategory productCategory = new()
+                    {
+                        CategoryId = CategoriesId[i],
+                        ProductId = product.Id
+
+                    };
+                    _productCategoryManager.AddProductCategory(productCategory);
+
+                }
+                product.SeoUrl = "test";
+                _productManager.Update(product);
+                return RedirectToAction("Index");
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
     }

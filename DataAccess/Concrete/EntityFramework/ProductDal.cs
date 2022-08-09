@@ -1,6 +1,8 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,27 @@ namespace DataAccess.Concrete.EntityFramework
                 products.Add(findedProduct);
             }
             return products;
+        }
+
+        public ProductDetailDto GetProductById(int productId)
+        {
+            using ShopDbContext _context = new();
+            var productCategory = _context.productCategories.Include(x=>x.Category).Where(p => p.ProductId == productId).ToList();
+            var product=_context.Products.FirstOrDefault(x=>x.Id==productId);
+            List<Category> categoryList = new();
+            foreach (var item in productCategory)
+            {
+                categoryList.Add(item.Category);
+            }
+
+            ProductDetailDto result = new()
+            {
+                Id=product.Id,
+                Name=product.Name,
+                Categories=categoryList
+            };
+            return result;
+
         }
     }
 }

@@ -11,5 +11,7 @@ namespace Business.Abstract
     {
         void AddProductCategory(ProductCategory productCategory);
         List<ProductCategory> GetProductCategoryById(int productId);
+        void RemoveProductCategories(int productId);    
+      
     }
 }

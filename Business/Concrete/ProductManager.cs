@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +46,19 @@ namespace Business.Concrete
            return  _productDal.Get(x => x.Id == id);  
         }
 
+        public ProductDetailDto GetProductById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Product> GetProductsByCategory(int categoryId)
         {
             return _productDal.GetByCategory(categoryId);
+        }
+
+        public List<Product> GetSliderProducts()
+        {
+            return _productDal.GetAll(x=>x.IsSlider==true && x.IsDelete==false); 
         }
 
         public void Update(Product product)
