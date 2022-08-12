@@ -37,8 +37,9 @@ namespace Business.Concrete
         }
 
         public List<Product> GetByCategory(int categoryId)
-        {
-            throw new NotImplementedException();
+        { 
+           return _productDal.GetByCategory(categoryId);
+
         }
 
         public Product GetById(int id)
@@ -48,7 +49,7 @@ namespace Business.Concrete
 
         public ProductDetailDto GetProductById(int id)
         {
-            throw new NotImplementedException();
+            return _productDal.GetProductById( id);
         }
 
         public List<Product> GetProductsByCategory(int categoryId)

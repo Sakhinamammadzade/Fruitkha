@@ -51,6 +51,12 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 Id=product.Id,
                 Name=product.Name,
+                CoverPhoto=product.CoverPhoto,
+                Description=product.Description,
+                DisCount=product.DisCount,
+                PhotoUrl=product.PhotoUrl,
+                Price=product.Price,
+                Quantity=product.Quantity,
                 Categories=categoryList
             };
             return result;
