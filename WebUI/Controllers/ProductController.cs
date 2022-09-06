@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.ViewModels;
 
@@ -17,14 +18,18 @@ namespace WebUI.Controllers
         {
           return View();
         }
+        [Authorize] 
         public IActionResult Detail(int id)
         {
             try
             {
                 var product = _productManager.GetProductById(id);
+                var productCategories=product.Categories.Select(x=>x.Id).ToList();
+                var relatedProdutcs=_productManager.RelatedProducts(productCategories,product.Id);
                 ProductDetailVM productDetail = new()
                 {
-                    Product=product
+                    Product=product,
+                    Products=relatedProdutcs
                 };
 
                 return View(productDetail);

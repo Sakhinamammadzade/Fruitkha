@@ -22,9 +22,11 @@ namespace WebUI.Controllers
         public IActionResult Index()
         {
             var productSlider=_productManagaer.GetSliderProducts();
+            var products=_productManagaer.GetHomeProducts();
             HomeVM vm = new()
             {
                 productSlider=productSlider,
+                Products=products,
             };
             return View(vm);
         }

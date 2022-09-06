@@ -23,6 +23,12 @@ namespace DataAccess.Concrete.EntityFramework
             return product;
         }
 
+        public List<Product> GetAllHomeProducts()
+        {
+            using ShopDbContext _context = new();
+            return _context.Products.Where(x=>x.IsDelete==false).Take(3).ToList();
+        }
+
         public List<Product> GetByCategory(int categoryId)
         {
             using ShopDbContext context = new();
@@ -35,6 +41,8 @@ namespace DataAccess.Concrete.EntityFramework
             }
             return products;
         }
+
+      
 
         public ProductDetailDto GetProductById(int productId)
         {
@@ -61,6 +69,20 @@ namespace DataAccess.Concrete.EntityFramework
             };
             return result;
 
+        }
+
+        public List<Product> RelatedProducts(List<int> CategoryId,int productId)
+        {
+            using ShopDbContext _context = new();
+            var productCategories = _context.productCategories.Where(x=>x.CategoryId== CategoryId[0]).Include(x=>x.Product);
+            List<Product> products = new();
+            for (int i = 0; i < productCategories.ToList().Count; i++)
+            {
+                products.Add(productCategories.Skip(i).FirstOrDefault().Product);
+            }
+
+
+            return products.Where(x=>x.Id!=productId).Take(3).ToList();
         }
     }
 }

@@ -90,36 +90,21 @@
 			</div>
 
 			<div class="row">
-				<div class="col-lg-4 col-md-6 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
-						</div>
-						<h3>Strawberry</h3>
-						<p class="product-price"><span>Per Kg</span> 85$ </p>
-						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="single-product.html"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
-						</div>
-						<h3>Berry</h3>
-						<p class="product-price"><span>Per Kg</span> 70$ </p>
-						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="single-product.html"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
-						</div>
-						<h3>Lemon</h3>
-						<p class="product-price"><span>Per Kg</span> 35$ </p>
-						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
+				@foreach (var product in Model.Products)
+            {
+                <div id="cart_@product.Id" class="col-lg-4 col-md-6 text-center">
+                <div class="single-product-item">
+                    <div class="product-image">
+                        <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id"><img src="@product.PhotoUrl" alt="@product.Name"></a>
+                    </div>
+                    <h3 class="productName">@product.Name</h3>
+                    <p class="product-price"><span>Per Kg</span> <p class="product-price productPrice">@product.Price</p> </p>
+                    <a onclick="addToCart(@product.Id)" id="addToCart" class="cart-btn addToCart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                </div>
+            </div>
+            }
+			
+				
 			</div>
 		</div>
 	</div>
@@ -337,3 +322,63 @@
 		</div>
 	</div>
 	<!-- end logo carousel -->
+
+	@section Scripts{
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js" integrity="sha512-wT7uPE7tOP6w4o28u1DN775jYjHQApdBnib5Pho4RB0Pgd9y7eSkAV1BTqQydupYDB9GBhTcQQzyNMPMV3cAew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script>
+			function GetCookie(name){
+				const value=`; ${document.cookie}`;
+				const parts = value.split(`; ${name}=`);
+				if(parts.length===2) return parts.pop().split(';').shift();
+
+			}
+			if(GetCookie("products") == null){
+				document.cookie="products="+JSON.stringify([])
+			}
+
+		 let addButton=document.getElementsByClassName("addToCart")
+		
+		 let cookieArray = [cookieTest]
+
+		  function addToCart(productId){
+		
+			   let cookieTest=JSON.parse(GetCookie("products"))
+			  let productCart=document.getElementById(`cart_${productId}`)
+			  let id=productId
+			  let image=productCart.getElementsByTagName("img")[0].currentSrc
+			  let price=productCart.getElementsByClassName("productPrice")[0].innerText
+			  let name=productCart.getElementsByClassName("productName")[0].innerText
+			  let cartItem={id:id,image:image,price:price.replace("$",""),name:name,quantity:1}
+			  let findId = cookieTest.length != 0? cookieTest.filter(x=>x.id==productId) : []
+
+			  var expires = "";
+					 var date = new Date();
+				date.setTime(date.getTime() + (22460601000));
+				expires = "; expires=" + date.toUTCString();
+
+               if(findId.length != 0){
+				  cookieTest.filter(x=>x.id==productId).map(x=>{
+					  x.quantity += 1
+
+				  })
+				  	  document.cookie="products="+JSON.stringify(cookieTest)+expires
+				 
+			  }else{
+				    document.cookie="products="+JSON.stringify([...cookieTest,cartItem])+expires
+			  }
+			  Swal.fire({
+				  position: 'top-end',
+				  icon: 'success',
+				  title: `${name}is added to cart`,
+				  showConfirmButton: false,
+				  timer: 1500
+				})
+		 }
+
+		  //cookieTest.filter(x=>x.id==5).map(x=>{
+			 // x.quantity +=1
+		  //})
+		  console.log(cookieTest)
+       </script>
+	}

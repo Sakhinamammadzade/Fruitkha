@@ -31,6 +31,18 @@ namespace Business.Concrete
             _productDal.Update(product);
         }
 
+        public void Return(int productId)
+        {
+            var product = _productDal.Get(x => x.Id == productId);
+            if (product.IsDelete = true)
+            {
+                product.IsDelete = false;   
+            }
+
+            _productDal.Update(product);
+        }
+
+
         public List<Product> GetAll()
         {
            return _productDal.GetAll();
@@ -45,6 +57,11 @@ namespace Business.Concrete
         public Product GetById(int id)
         {
            return  _productDal.Get(x => x.Id == id);  
+        }
+        
+        public List<Product> GetHomeProducts()
+        {
+           return _productDal.GetAllHomeProducts();
         }
 
         public ProductDetailDto GetProductById(int id)
@@ -62,11 +79,20 @@ namespace Business.Concrete
             return _productDal.GetAll(x=>x.IsSlider==true && x.IsDelete==false); 
         }
 
+        public List<Product> RelatedProducts(List<int> catergoryId, int productId)
+        {
+            return _productDal.RelatedProducts(catergoryId, productId);
+        }
+
         public void Update(Product product)
         {
             _productDal.Update(product);
         }
 
-       
+        public List<Product> GetShopProducts()
+        {
+            return _productDal.GetAll();
+
+        }
     }
 }
