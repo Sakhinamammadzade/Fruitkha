@@ -20,7 +20,7 @@
 								<h1>@slider.Name</h1>
 								<h1>Delicious Seasonal Fruits</h1>
 								<div class="hero-btns">
-									<a asp-controller="Product" asp-action="Detail" asp-route-id="@slider.Id" class="boxed-btn">Detail</a>
+									<a asp-controller="product" asp-action="Detail" asp-route-id="@slider.Id" class="boxed-btn">Detail</a>
 								
 								</div>
 							</div>
@@ -95,7 +95,7 @@
                 <div id="cart_@product.Id" class="col-lg-4 col-md-6 text-center">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id"><img src="@product.PhotoUrl" alt="@product.Name"></a>
+                        <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id"><img src="@product.PhotoUrl" alt="@product.Name"/></a>
                     </div>
                     <h3 class="productName">@product.Name</h3>
                     <p class="product-price"><span>Per Kg</span> <p class="product-price productPrice">@product.Price</p> </p>
@@ -352,20 +352,20 @@
 			  let cartItem={id:id,image:image,price:price.replace("$",""),name:name,quantity:1}
 			  let findId = cookieTest.length != 0? cookieTest.filter(x=>x.id==productId) : []
 
-			  var expires = "";
-					 var date = new Date();
-				date.setTime(date.getTime() + (22460601000));
-				expires = "; expires=" + date.toUTCString();
+			 // var expires = "";
+				//	 var date = new Date();
+				//date.setTime(date.getTime() + (22460601000));
+				//expires = "; expires=" + date.toUTCString();
 
                if(findId.length != 0){
 				  cookieTest.filter(x=>x.id==productId).map(x=>{
 					  x.quantity += 1
 
 				  })
-				  	  document.cookie="products="+JSON.stringify(cookieTest)+expires
+				  	  document.cookie="products="+JSON.stringify(cookieTest)
 				 
 			  }else{
-				    document.cookie="products="+JSON.stringify([...cookieTest,cartItem])+expires
+				    document.cookie="products="+JSON.stringify([...cookieTest,cartItem])
 			  }
 			  Swal.fire({
 				  position: 'top-end',

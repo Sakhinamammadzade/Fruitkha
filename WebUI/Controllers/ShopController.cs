@@ -17,9 +17,9 @@ namespace WebUI.Controllers
            
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId, decimal? minPrice, decimal? maxPrice)
         {
-            var products=_productManager.GetShopProducts();
+            var products=_productManager.GetShopProducts(categoryId,minPrice,maxPrice);
             var categories = _categoryManager.GetAll();
             ShopVM shopVM = new()
             {

@@ -13,13 +13,13 @@ namespace Business.Abstract
         Product Add(Product product);
         void Update(Product product);
         void Delete(int productId);   
-        void Return(int productId);
+        void Restore(int productId); 
         List<Product> GetAll();
-        List<Product> GetShopProducts();
+        List<Product> GetShopProducts(int? categoryId, decimal? minPrice, decimal? maxPrice);
         List<Product> GetHomeProducts();
         List<Product> GetProductsByCategory(int categoryId);
         Product GetById(int id);
-        
+  
         ProductDetailDto GetProductById(int id);
         List<Product> GetSliderProducts();
         List<Product> RelatedProducts(List<int> catergoryId, int productId);

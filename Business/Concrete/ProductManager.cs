@@ -31,12 +31,12 @@ namespace Business.Concrete
             _productDal.Update(product);
         }
 
-        public void Return(int productId)
+        public void Restore(int productId)
         {
             var product = _productDal.Get(x => x.Id == productId);
             if (product.IsDelete = true)
             {
-                product.IsDelete = false;   
+                product.IsDelete = false;
             }
 
             _productDal.Update(product);
@@ -89,9 +89,11 @@ namespace Business.Concrete
             _productDal.Update(product);
         }
 
-        public List<Product> GetShopProducts()
+      
+
+        public List<Product> GetShopProducts(int? categoryId, decimal? minPrice, decimal? maxPrice)
         {
-            return _productDal.GetAll();
+            return _productDal.GetFilterShopProduct(categoryId,minPrice,maxPrice);
 
         }
     }

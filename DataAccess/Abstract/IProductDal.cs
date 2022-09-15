@@ -16,6 +16,7 @@ namespace DataAccess.Abstract
         List<Product> RelatedProducts(List<int> CategoryId,int productId);
         Product AddProduct(Product product);
         ProductDetailDto GetProductById(int productId);
+        List<Product>GetFilterShopProduct(int? categoryId,decimal?minPrice,decimal? maxPrice);
 
     }
 }

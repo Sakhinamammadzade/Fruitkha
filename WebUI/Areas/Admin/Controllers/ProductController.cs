@@ -104,8 +104,37 @@ namespace WebUI.Areas.Admin.Controllers
        
 
         }
+        [HttpGet]
+        public IActionResult Restore(int id)
+        {
 
-      
+            var product = _productManager.GetById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+        [HttpPost]
+
+        public IActionResult Restore(Product product)
+        {
+
+
+            try
+            {
+                _productManager.Restore(product.Id);
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+
+
+        }
 
 
         [HttpGet]

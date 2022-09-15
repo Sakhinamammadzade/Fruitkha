@@ -42,7 +42,37 @@ namespace DataAccess.Concrete.EntityFramework
             return products;
         }
 
-      
+        public List<Product> GetFilterShopProduct(int? categoryId, decimal? minPrice, decimal? maxPrice)
+        {
+            using var _context = new ShopDbContext();
+            List<Product> products = new();
+            foreach (var item in _context.Products.ToList())
+            {
+                products.Add(item);
+            }
+            var findMaxPrice = products.OrderByDescending(x => x.Price).FirstOrDefault().Price;
+            if(minPrice==null)
+                minPrice = 0;
+            if(maxPrice==null)
+                maxPrice = findMaxPrice;
+            if (categoryId != null)
+            {
+                var productCategory = _context.productCategories.Where(x => x.CategoryId == categoryId).ToList();
+                List<Product> result = new();
+                for (int i = 0; i < productCategory.Count; i++)
+                {
+                    var product = _context.Products.FirstOrDefault(x => x.Id == productCategory[i].ProductId &&x.Price>=minPrice&&x.Price==maxPrice);
+                    if (product != null)
+                        result.Add(product);
+                       
+                }
+
+                return result;
+            }
+            return _context.Products.ToList();
+           
+        
+        }
 
         public ProductDetailDto GetProductById(int productId)
         {
